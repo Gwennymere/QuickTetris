@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class Piece {
     public int yOffset = 0;
+    public int xOffset = 0;
     private BoundingBox boundingBox;
     private Shape shape;
     private Color color;

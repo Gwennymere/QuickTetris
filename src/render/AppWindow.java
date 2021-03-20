@@ -15,7 +15,7 @@ public class AppWindow extends JFrame {
     private AppWindow(GameData gameData) {
         super("QuickTetris");
         this.gameData = gameData;
-        this.canvas = new Canvas(gameData.getGrid());
+        this.canvas = new Canvas(gameData, 50, 50);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);

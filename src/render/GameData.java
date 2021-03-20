@@ -1,12 +1,15 @@
 package render;
 
 import game.GameMode;
+import game.piece.Piece;
+import game.piece.Shape;
 
 public class GameData {
     private static final GameData instance = new GameData();
     private final Grid grid;
     public final static int GRID_WIDTH = 10;
     public final static int GRID_HEIGHT = 20;
+    private final Piece[] pieces = new Piece[2];
     private GameMode gameMode = GameMode.MAIN_MENU;
     private View view = View.INGAME;
 
@@ -37,5 +40,9 @@ public class GameData {
 
     public View getView() {
         return view;
+    }
+
+    public Piece getActivePiece() {
+        return pieces[0];
     }
 }
