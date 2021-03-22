@@ -4,7 +4,6 @@ import game.piece.Piece;
 import input.KeyType;
 import render.AppWindow;
 import render.GameData;
-import render.Grid;
 
 public class GameManager {
     private final GameData gameData;
@@ -49,7 +48,7 @@ public class GameManager {
     }
 
     public void dive() {
-        gameData.getActivePiece().moveDown(getSurroundingAspectWithOffset(0, 1));
+        gameData.getActivePiece().moveDown(gameData.getGridAspectOverlappingWithActivePieceWithOffset(0, 1));
     }
 
     public void keyAction(KeyType keyType) {
@@ -65,35 +64,6 @@ public class GameManager {
     }
 
     private void rotatePiece(boolean clockwise) {
-        gameData.getActivePiece().rotate(clockwise, getSurroundingAspect());
-    }
-
-    private int[][] getSurroundingAspectWithOffset(int xOffset, int yOffset) {
-        final Piece activePiece = gameData.getActivePiece();
-        Grid grid = gameData.getGrid();
-        int[][][] gridData = grid.data;
-
-        int[][] surroundingAspect = new int[activePiece.getWidth()][activePiece.getHeight()];
-        for (int x = 0; x < activePiece.getWidth(); x++) {
-            for (int y = 0; y < activePiece.getHeight(); y++) {
-                final int gridX = x + activePiece.xOffset + xOffset;
-                final int gridY = y + activePiece.yOffset + yOffset;
-                if (gridX < 0 || gridX > grid.getWidth() - 1 || gridY < 0 || gridY > grid.getHeight() - 1) {
-                    // TODO
-                    System.out.println(" OUT OF BOUNDS, WONT COMPUTE");
-                } else {
-                    if (gridData[gridX][gridY][0] > 0) {
-                        surroundingAspect[x][y] = 1;
-                    } else {
-                        surroundingAspect[x][y] = 0;
-                    }
-                }
-            }
-        }
-        return surroundingAspect;
-    }
-
-    private int[][] getSurroundingAspect() {
-        return getSurroundingAspectWithOffset(0, 0);
+        gameData.getActivePiece().rotate(clockwise, gameData.getGridAspectOverlappingWithActivePiece());
     }
 }
