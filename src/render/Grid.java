@@ -25,8 +25,7 @@ public class Grid {
                 final int gridX = x + xPos;
                 final int gridY = y + yPos;
                 if (gridX < 0 || gridX > this.getWidth() - 1 || gridY < 0 || gridY > this.getHeight() - 1) {
-                    // TODO
-                    System.out.println(" OUT OF BOUNDS, WONT COMPUTE");
+                    surroundingAspect[x][y] = 1;
                 } else {
                     if (this.data[gridX][gridY][0] > 0) {
                         surroundingAspect[x][y] = 1;
