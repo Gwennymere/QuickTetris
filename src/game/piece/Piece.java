@@ -9,6 +9,7 @@ public class Piece {
     private BoundingBox boundingBox;
     private Shape shape;
     private Color color;
+    private boolean disabled = true;
 
     private static final Map<Shape, Color> COLOR_MAPPING = new HashMap<>() {{
         put(Shape.L, Color.RED);
@@ -75,5 +76,11 @@ public class Piece {
             return true;
         }
         return false;
+    }
+
+    public void reset(boolean disable) {
+        if (disable) {
+            this.disabled = true;
+        }
     }
 }

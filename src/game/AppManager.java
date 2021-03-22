@@ -4,7 +4,7 @@ import input.KeyType;
 import render.AppWindow;
 import render.GameData;
 
-public class AppManager implements Runnable{
+public class AppManager implements Runnable {
     private final GameData gameData;
     private final AppWindow appWindow;
     private int GAME_SPEED = 400;
@@ -39,7 +39,7 @@ public class AppManager implements Runnable{
                 shiftPiece(false);
                 break;
             case FREEZE:
-                movePieceToGrid();
+                movePieceDataToGridData();
                 break;
             case ESCAPE:
                 setAppRunning(!appIsRunning);
@@ -68,15 +68,13 @@ public class AppManager implements Runnable{
         return gameData.getActivePiece().rotate(clockwise, gameData.getGridAspectOverlappingWithActivePiece());
     }
 
-    private synchronized void movePieceToGrid() {
+    private synchronized void movePieceDataToGridData() {
         this.gameData.movePieceToGrid();
     }
 
     @Override
     public void run() {
         while (appIsRunning) {
-            final int[] lanes = gameData.getGrid().identifyFilledLanes(0, 19);
-            gameData.getGrid().clearMultipleLanes(lanes);
             update();
             redraw();
             threadWait();
@@ -92,9 +90,21 @@ public class AppManager implements Runnable{
     }
 
     private void update() {
-        final boolean wasAbleToMove = movePieceDown();
-        if (!wasAbleToMove) {
-            movePieceToGrid();
+        final int[] lanes = gameData.getGrid().identifyFilledLanes(0, 19);
+        final boolean removeLanes = lanes.length > 0;
+
+        if (removeLanes) {
+            gameData.getGrid().clearMultipleLanes(lanes);
+        } else {
+            final boolean pieceIsMovable = movePieceDown();
+            if (!pieceIsMovable) {
+                movePieceDataToGridData();
+                resetActivePiece();
+            }
         }
+    }
+
+    private void resetActivePiece() {
+        this.gameData.getActivePiece().reset(true);
     }
 }
