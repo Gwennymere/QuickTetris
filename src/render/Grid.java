@@ -9,4 +9,12 @@ public class Grid {
         // DUMMY
         this.data[0][5][0] = 255;
     }
+
+    public int getHeight() {
+        return data[0].length;
+    }
+
+    public int getWidth() {
+        return data.length;
+    }
 }

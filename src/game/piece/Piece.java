@@ -59,7 +59,12 @@ public class Piece {
         return boundingBox.getWidth();
     }
 
-    public boolean moveDown() {
+    public boolean moveDown(int[][] surroundingAspect) {
+        final boolean boundingStateIsValid = boundingBox.isBoundingStateValid(surroundingAspect);
+        if (boundingStateIsValid) {
+            this.yOffset++;
+            return true;
+        }
         return false;
     }
 }

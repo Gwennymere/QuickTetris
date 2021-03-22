@@ -29,11 +29,11 @@ public class BoundingBox {
         }
     }
 
-    private boolean isBoundingStateValid(int[][] surroundingAspect) {
+    public boolean isBoundingStateValid(int[][] surroundingAspect) {
         return isRotatedBoundingStateValid(surroundingAspect, 0);
     }
 
-    private boolean isRotatedBoundingStateValid(int[][] surroundingAspect, int rotation) {
+    public boolean isRotatedBoundingStateValid(int[][] surroundingAspect, int rotation) {
         final int[][] ownAspect = this.getRotatedAspect(rotation);
         System.out.println("------------------");
         for (int i = 0; i < surroundingAspect.length; i++) {
