@@ -22,7 +22,7 @@ public class GameManager {
     @Deprecated
     public void updateOld() {
         final Piece activePiece = gameData.getActivePiece();
-        int[][][] gridData = gameData.getGrid().data;
+        int[][][] gridData = gameData.getGrid().getData();
         final int[][][] coloredAspect = activePiece.getColoredAspect();
         for (int x = 0; x < activePiece.getWidth(); x++) {
             final int yOffset = activePiece.yOffset;
@@ -43,7 +43,7 @@ public class GameManager {
                 }
             }
         }
-        gameData.setGridData(gridData);
+        gameData.overrideGridData(gridData);
         appWindow.repaint();
     }
 

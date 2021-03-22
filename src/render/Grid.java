@@ -1,7 +1,7 @@
 package render;
 
 public class Grid {
-    public int[][][] data;
+    private int[][][] data;
 
     public Grid(int width, int height) {
         this.data = new int[width][height][3];
@@ -36,5 +36,13 @@ public class Grid {
             }
         }
         return surroundingAspect;
+    }
+
+    public void setData(int[][][] newData) {
+        this.data = newData;
+    }
+
+    public int[][][] getData() {
+        return data;
     }
 }
