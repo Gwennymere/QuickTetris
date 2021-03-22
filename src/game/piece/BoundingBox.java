@@ -20,12 +20,12 @@ public class BoundingBox {
         return shape.getAspect(this.rotation + rotation);
     }
 
-    public void rotate(int directionModifier, int[][] surroundingAspect) {
+    public boolean rotate(int directionModifier, int[][] surroundingAspect) {
         if (!isRotatedBoundingStateValid(surroundingAspect, directionModifier)) {
-            System.out.println("Could not rotate to " + (rotation + directionModifier));
+            return false;
         } else {
             this.rotation += directionModifier;
-            System.out.println("Could rotate to " + rotation);
+            return true;
         }
     }
 

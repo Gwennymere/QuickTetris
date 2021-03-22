@@ -2,7 +2,6 @@ package render;
 
 import game.GameMode;
 import game.piece.Piece;
-import game.piece.Shape;
 
 public class GameData {
     private static final GameData instance = new GameData();
@@ -27,7 +26,7 @@ public class GameData {
     }
 
     public void movePieceToGrid() {
-        grid.setGridCutout(activePiece.getColoredAspect(), activePiece.xOffset, activePiece.yOffset, false);
+        grid.setAspectCutout(activePiece.getColoredAspect(), activePiece.xOffset, activePiece.yOffset, false);
         getActivePiece().yOffset = 0;
     }
 

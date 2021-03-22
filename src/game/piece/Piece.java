@@ -30,12 +30,12 @@ public class Piece {
         this.boundingBox = new BoundingBox(shape);
     }
 
-    public void rotate(boolean clockwise, int[][] surroundingAspect) {
+    public boolean rotate(boolean clockwise, int[][] surroundingAspect) {
         int directionModifier = -1;
         if (!clockwise) {
             directionModifier = 1;
         }
-        this.boundingBox.rotate(directionModifier, surroundingAspect);
+        return this.boundingBox.rotate(directionModifier, surroundingAspect);
     }
 
     public int[][][] getColoredAspect() {
@@ -68,10 +68,12 @@ public class Piece {
         return false;
     }
 
-    public void move(int dir, int[][] gridAspect) {
+    public boolean move(int dir, int[][] gridAspect) {
         final boolean boundingStateIsValid = boundingBox.isBoundingStateValid(gridAspect);
         if (boundingStateIsValid) {
             this.xOffset += dir;
+            return true;
         }
+        return false;
     }
 }

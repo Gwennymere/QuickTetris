@@ -12,6 +12,7 @@ public enum KeyType {
     MOVE_RIGHT,
     DIVE,
     FREEZE,
+    ESCAPE,
     NONE;
 
     private static final GameData gameData = GameData.getInstance();
@@ -26,9 +27,11 @@ public enum KeyType {
         put(32, FREEZE);
         put(83, DIVE);
         put(40, DIVE);
+        put(27, ESCAPE);
     }};
 
     public static KeyType get(int keyCode) {
+        System.out.print(keyCode);
         switch (KeyType.gameData.getView()) {
             case INGAME:
                 final KeyType keyType = ingameKeyCodeMap.get(keyCode);

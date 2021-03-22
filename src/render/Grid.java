@@ -1,7 +1,10 @@
 package render;
 
+import java.util.Arrays;
+
 public class Grid {
     private int[][][] data;
+    private int[] filledLanes;
 
     public Grid(int width, int height) {
         this.data = new int[width][height][3];
@@ -46,13 +49,50 @@ public class Grid {
         return data;
     }
 
-    public void setGridCutout(int[][][] cutout, int xPos, int yPos, boolean overrideNullData) {
+    public void setAspectCutout(int[][][] cutout, int xPos, int yPos, boolean overrideNullData) {
         for (int x = 0; x < cutout.length; x++) {
             for (int y = 0; y < cutout[0].length; y++) {
                 if (overrideNullData || cutout[x][y][0] > 0) {
                     data[x + xPos][y + yPos] = cutout[x][y];
                 }
             }
+        }
+    }
+
+    public int[] identifyFilledLanes(int from, int to) {
+        filledLanes = new int[0];
+        for (int y = from; y <= to; y++) {
+            if (isLaneFilled(y)) {
+                filledLanes = Arrays.copyOf(filledLanes, filledLanes.length + 1);
+                filledLanes[filledLanes.length - 1] = y;
+            }
+        }
+        return filledLanes;
+    }
+
+    public boolean isLaneFilled(int lane) {
+        for (int x = 0; x < getWidth(); x++) {
+            if (data[x][lane][0] == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void clearLane(int lane) {
+        for (int y = lane; y > 0; y--) {
+            for (int x = 0; x < getWidth(); x++) {
+                data[x][y] = data[x][y - 1];
+            }
+        }
+        for (int x = 0; x < getWidth(); x++) {
+            data[x][0] = new int[]{0, 0, 0};
+        }
+    }
+
+    public void clearMultipleLanes(int[] lane) {
+        for (int i = 0; i < lane.length; i++) {
+            clearLane(lane[i]);
         }
     }
 }

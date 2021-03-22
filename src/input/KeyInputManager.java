@@ -1,29 +1,29 @@
 package input;
 
-import game.GameManager;
+import game.AppManager;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyInputManager implements KeyListener {
     private static KeyInputManager instance;
-    private GameManager gameManager;
+    private AppManager appManager;
 
-    private KeyInputManager(GameManager gameManager) {
-        setGameManager(gameManager);
+    private KeyInputManager(AppManager appManager) {
+        setGameManager(appManager);
     }
 
-    public static KeyInputManager createAndGetInstance(GameManager gameManager) {
+    public static KeyInputManager createAndGetInstance(AppManager appManager) {
         if (instance != null) {
-            instance.setGameManager(gameManager);
+            instance.setGameManager(appManager);
             return instance;
         }
-        instance = new KeyInputManager(gameManager);
+        instance = new KeyInputManager(appManager);
         return instance;
     }
 
-    private void setGameManager(GameManager gameManager) {
-        this.gameManager = gameManager;
+    private void setGameManager(AppManager appManager) {
+        this.appManager = appManager;
     }
 
 
@@ -33,7 +33,7 @@ public class KeyInputManager implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         final int keyCode = e.getExtendedKeyCode();
-        gameManager.keyAction(KeyType.get(keyCode));
+        appManager.keyAction(KeyType.get(keyCode));
     }
 
     @Override
