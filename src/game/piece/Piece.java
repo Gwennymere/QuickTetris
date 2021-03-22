@@ -67,4 +67,11 @@ public class Piece {
         }
         return false;
     }
+
+    public void move(int dir, int[][] gridAspect) {
+        final boolean boundingStateIsValid = boundingBox.isBoundingStateValid(gridAspect);
+        if (boundingStateIsValid) {
+            this.xOffset += dir;
+        }
+    }
 }

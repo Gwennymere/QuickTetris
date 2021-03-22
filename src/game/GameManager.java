@@ -47,20 +47,37 @@ public class GameManager {
         appWindow.repaint();
     }
 
-    public void dive() {
+    public void divePiece() {
         gameData.getActivePiece().moveDown(gameData.getGridAspectOverlappingWithActivePieceWithOffset(0, 1));
     }
 
     public void keyAction(KeyType keyType) {
         switch (keyType) {
             case DIVE:
-                dive();
+                divePiece();
                 break;
             case TURN_CLOCKWISE:
                 rotatePiece(true);
                 break;
+            case TURN_COUNTER_CLOCKWISE:
+                rotatePiece(false);
+                break;
+            case MOVE_LEFT:
+                shiftPiece(true);
+                break;
+            case MOVE_RIGHT:
+                shiftPiece(false);
+                break;
         }
         update();
+    }
+
+    private void shiftPiece(boolean direction) {
+        int dir = 1;
+        if (direction) {
+            dir = -1;
+        }
+        gameData.getActivePiece().move(dir, gameData.getGridAspectOverlappingWithActivePieceWithOffset(dir, 0));
     }
 
     private void rotatePiece(boolean clockwise) {
