@@ -1,9 +1,11 @@
 package render;
 
+import exceptions.UnexpectedStateException;
 import game.piece.Piece;
 
 import javax.swing.*;
 import java.awt.*;
+import java.rmi.UnexpectedException;
 
 public class Canvas extends JPanel {
     private static final int CELL_WIDTH = 10;
@@ -29,6 +31,7 @@ public class Canvas extends JPanel {
         super.paint(g);
         this.drawGameBoardGrid(g);
         this.drawActivePiece(g);
+        printGridDebug();
         System.out.println("repainted");
     }
 
@@ -69,5 +72,40 @@ public class Canvas extends JPanel {
         g.fillRect(xPos * CELL_WIDTH, yPos * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);
         g.setColor(color);
         g.fillRect(xPos * CELL_WIDTH + BORDER_WIDTH, yPos * CELL_HEIGHT + BORDER_HEIGHT, CUBE_WIDTH + BORDER_WIDTH, CUBE_HEIGHT + BORDER_HEIGHT);
+    }
+
+    void printGridDebug() {
+        final int[][][] row = gameData.getGrid().data;
+        for (int i = 0; i < row.length; i++) {
+            final int[][] col = row[i];
+            for (int j = 0; j < col.length; j++) {
+                final Piece activePiece = gameData.getActivePiece();
+                boolean isInPieceBounds = false;
+                int[] activePieceAspectCell = new int[0];
+                if (i >= activePiece.xOffset
+                        && i < activePiece.xOffset + activePiece.getWidth()
+                        && j >= activePiece.yOffset
+                        && j < activePiece.yOffset + activePiece.getHeight()) {
+                    isInPieceBounds = true;
+                    activePieceAspectCell = activePiece.getColoredAspect()[i - activePiece.xOffset][j - activePiece.yOffset];
+                }
+                if (isInPieceBounds && activePieceAspectCell[0] >= 1 && col[j][0] >= 1) {
+                    System.out.print("X");
+                } else if (isInPieceBounds && activePieceAspectCell[0] >= 1) {
+                    System.out.print("r");
+                } else if (col[j][0] == 0) {
+                    System.out.print("0");
+                } else if (col[j][0] > 0) {
+                    System.out.print("b");
+                } else {
+                    try {
+                        throw new UnexpectedStateException();
+                    } catch (UnexpectedStateException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            System.out.println();
+        }
     }
 }

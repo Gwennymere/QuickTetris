@@ -122,7 +122,15 @@ public enum Shape {
     }
 
     public int[][] getAspect(int rotation) {
-        int actualRot = rotation % layout.length;
+        final int depth = this.getDepth();
+        int actualRot = rotation % depth;
+        if (actualRot < 0) {
+            actualRot += depth;
+        }
         return this.layout[actualRot];
+    }
+
+    public int getDepth() {
+        return layout.length;
     }
 }

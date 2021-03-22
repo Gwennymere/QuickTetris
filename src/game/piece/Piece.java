@@ -31,9 +31,9 @@ public class Piece {
     }
 
     public void rotate(boolean clockwise, int[][] surroundingAspect) {
-        int directionModifier = 1;
+        int directionModifier = -1;
         if (!clockwise) {
-            directionModifier = -1;
+            directionModifier = 1;
         }
         this.boundingBox.rotate(directionModifier, surroundingAspect);
     }

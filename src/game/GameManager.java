@@ -48,9 +48,11 @@ public class GameManager {
     }
 
     public void dive() {
-        this.pieces[0].yOffset++;
-        pieces[0].moveDown();
-        System.out.println(this.pieces[0].yOffset);
+        System.out.println("diving");
+        final Piece activePiece = gameData.getActivePiece();
+        activePiece.yOffset++;
+        activePiece.moveDown();
+        System.out.println(activePiece.yOffset);
     }
 
     public void keyAction(KeyType keyType) {
@@ -76,7 +78,7 @@ public class GameManager {
         int[][] surroundingAspect = new int[activePiece.getWidth()][activePiece.getHeight()];
         for (int x = 0; x < activePiece.getWidth(); x++) {
             for (int y = 0; y < activePiece.getHeight(); y++) {
-                if (activePiece.getColoredAspect()[x][y][0] == 0 && gridData[x][y][0] > 0) {
+                if (activePiece.getColoredAspect()[x][y][0] == 0 && gridData[x + activePiece.xOffset][y + activePiece.yOffset][0] > 0) {
                     surroundingAspect[x][y] = 1;
                 } else {
                     surroundingAspect[x][y] = 0;
