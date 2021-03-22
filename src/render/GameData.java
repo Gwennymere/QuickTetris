@@ -9,7 +9,7 @@ public class GameData {
     private final Grid grid;
     public final static int GRID_WIDTH = 10;
     public final static int GRID_HEIGHT = 20;
-    private final Piece[] pieces = new Piece[2];
+    private Piece activePiece;
     private GameMode gameMode = GameMode.MAIN_MENU;
     private View view = View.INGAME;
 
@@ -26,8 +26,13 @@ public class GameData {
         return grid;
     }
 
-    public void setGridData(int[][][] gridData) {
-        this.grid.data = gridData;
+    public void movePieceToGrid() {
+        grid.setGridCutout(activePiece.getColoredAspect(), activePiece.xOffset, activePiece.yOffset, false);
+        getActivePiece().yOffset = 0;
+    }
+
+    public void overrideGridData(int[][][] newGridData) {
+        this.grid.setData(newGridData);
     }
 
     public void setView(View view) {
@@ -43,6 +48,18 @@ public class GameData {
     }
 
     public Piece getActivePiece() {
-        return pieces[0];
+        return activePiece;
+    }
+
+    public int[][] getGridAspectOverlappingWithActivePieceWithOffset(int xOffset, int yOffset) {
+        final Piece activePiece = getActivePiece();
+        return grid.getAspectCutout(activePiece.xOffset + xOffset,
+                activePiece.yOffset + yOffset,
+                activePiece.getWidth(),
+                activePiece.getHeight());
+    }
+
+    public int[][] getGridAspectOverlappingWithActivePiece() {
+        return getGridAspectOverlappingWithActivePieceWithOffset(0, 0);
     }
 }

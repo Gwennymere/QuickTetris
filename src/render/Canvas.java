@@ -5,7 +5,6 @@ import game.piece.Piece;
 
 import javax.swing.*;
 import java.awt.*;
-import java.rmi.UnexpectedException;
 
 public class Canvas extends JPanel {
     private static final int CELL_WIDTH = 10;
@@ -31,12 +30,12 @@ public class Canvas extends JPanel {
         super.paint(g);
         this.drawGameBoardGrid(g);
         this.drawActivePiece(g);
-        printGridDebug();
+//        printGridDebug();
         System.out.println("repainted");
     }
 
     private void drawGameBoardGrid(Graphics g) {
-        this.drawAspect(gameData.getGrid().data, gameBoardPosX, gameBoardPosY, true, g);
+        this.drawAspect(gameData.getGrid().getData(), gameBoardPosX, gameBoardPosY, true, g);
     }
 
     private void drawActivePiece(Graphics g) {
@@ -67,7 +66,7 @@ public class Canvas extends JPanel {
     }
 
     private void drawCell(int xPos, int yPos, Color color, Graphics g) {
-        final int[][][] gridData = gameData.getGrid().data;
+        final int[][][] gridData = gameData.getGrid().getData();
         g.setColor(BORDER_COLOR);
         g.fillRect(xPos * CELL_WIDTH, yPos * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);
         g.setColor(color);
@@ -75,7 +74,7 @@ public class Canvas extends JPanel {
     }
 
     void printGridDebug() {
-        final int[][][] row = gameData.getGrid().data;
+        final int[][][] row = gameData.getGrid().getData();
         for (int i = 0; i < row.length; i++) {
             final int[][] col = row[i];
             for (int j = 0; j < col.length; j++) {

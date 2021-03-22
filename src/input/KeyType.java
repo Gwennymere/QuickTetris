@@ -11,6 +11,7 @@ public enum KeyType {
     MOVE_LEFT,
     MOVE_RIGHT,
     DIVE,
+    FREEZE,
     NONE;
 
     private static final GameData gameData = GameData.getInstance();
@@ -22,6 +23,7 @@ public enum KeyType {
         put(39, MOVE_RIGHT);
         put(65, MOVE_LEFT);
         put(37, MOVE_LEFT);
+        put(32, FREEZE);
         put(83, DIVE);
         put(40, DIVE);
     }};

@@ -68,8 +68,15 @@ public class GameManager {
             case MOVE_RIGHT:
                 shiftPiece(false);
                 break;
+            case FREEZE:
+                movePieceToGrid();
+                break;
         }
         update();
+    }
+
+    private void movePieceToGrid() {
+        this.gameData.movePieceToGrid();
     }
 
     private void shiftPiece(boolean direction) {

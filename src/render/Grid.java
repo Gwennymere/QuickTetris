@@ -45,4 +45,14 @@ public class Grid {
     public int[][][] getData() {
         return data;
     }
+
+    public void setGridCutout(int[][][] cutout, int xPos, int yPos, boolean overrideNullData) {
+        for (int x = 0; x < cutout.length; x++) {
+            for (int y = 0; y < cutout[0].length; y++) {
+                if (overrideNullData || cutout[x][y][0] > 0) {
+                    data[x + xPos][y + yPos] = cutout[x][y];
+                }
+            }
+        }
+    }
 }
