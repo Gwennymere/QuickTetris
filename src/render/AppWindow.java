@@ -1,29 +1,29 @@
 package render;
 
-import app.AppManager;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class AppWindow extends JFrame {
     private static int WIDTH = 300;
     private static int HEIGHT = 650;
 
     private static AppWindow instance = new AppWindow(GameData.getInstance());
-    private Canvas canvas;
-    private GameData gameData;
+    private GameCanvas gameCanvas;
+    private final Collection<Component> componentList = new ArrayList<>();
+    private final JPanel mainMenu = new MainMenu();
 
     private AppWindow(GameData gameData) {
         super("QuickTetris");
-        this.gameData = gameData;
-        this.canvas = new Canvas(gameData, 50, 50);
+        this.gameCanvas = new GameCanvas(gameData, 50, 50);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
-        add(this.canvas);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
         setVisible(true);
+
 
         System.out.println(this.getClass() + " created!");
     }
@@ -32,13 +32,29 @@ public class AppWindow extends JFrame {
         return instance;
     }
 
-    public void addRestartButton() {
-        final Button restart = new Button("Restart");
-        canvas.add(restart);
-        restart.addActionListener(e -> {
-            AppManager.getInstance().startNewGame();
-            canvas.remove(restart);
-        });
+    public void setupMainMenu() {
+        removeAllComponentsFromWindow();
+        addComponent(this.mainMenu);
+        repaint();
         setVisible(true);
+    }
+
+    public void setupGameScreen() {
+        removeAllComponentsFromWindow();
+        addComponent(this.gameCanvas);
+        repaint();
+        setVisible(true);
+    }
+
+    private void addComponent(Component comp) {
+        componentList.add(comp);
+        add(comp);
+    }
+
+    private void removeAllComponentsFromWindow() {
+        for (Component comp : componentList) {
+            this.remove(comp);
+        }
+        componentList.clear();
     }
 }

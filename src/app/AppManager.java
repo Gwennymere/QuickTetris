@@ -28,11 +28,12 @@ public class AppManager {
     }
 
     public void gameConcluded() {
-        appWindow.addRestartButton();
+        appWindow.setupMainMenu();
     }
 
     public void startNewGame() {
         this.gameManager.runNewGame();
+        this.appWindow.setupGameScreen();
         this.appWindow.requestFocus();
     }
 }

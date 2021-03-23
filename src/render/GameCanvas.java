@@ -5,7 +5,7 @@ import game.piece.Piece;
 import javax.swing.*;
 import java.awt.*;
 
-public class Canvas extends JPanel {
+public class GameCanvas extends JPanel {
     private static final int CELL_WIDTH = 10;
     private static final int CELL_HEIGHT = CELL_WIDTH;
     private static final int BORDER_WIDTH = 1;
@@ -17,7 +17,7 @@ public class Canvas extends JPanel {
     private final int gameBoardPosX;
     private final int gameBoardPosY;
 
-    public Canvas(GameData gameData, int gameBoardPosX, int gameBoardPosY) {
+    public GameCanvas(GameData gameData, int gameBoardPosX, int gameBoardPosY) {
         super(true);
         this.gameData = gameData;
         this.gameBoardPosX = gameBoardPosX % CELL_WIDTH;
