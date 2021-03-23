@@ -7,14 +7,16 @@ import render.AppWindow;
 import render.GameData;
 
 public class AppManager implements Runnable {
+    private static final AppManager instance = new AppManager();
+
     private final GameData gameData;
     private final AppWindow appWindow;
     private int GAME_SPEED = 400;
 
     private boolean appIsRunning = true;
 
-    public AppManager(AppWindow appWindow) {
-        this.appWindow = appWindow;
+    private AppManager() {
+        this.appWindow = AppWindow.getInstance();
         this.gameData = GameData.getInstance();
         redraw();
     }
@@ -133,5 +135,9 @@ public class AppManager implements Runnable {
         if (!boundingStateValid) {
             appIsRunning = false;
         }
+    }
+
+    public static AppManager getInstance() {
+        return instance;
     }
 }

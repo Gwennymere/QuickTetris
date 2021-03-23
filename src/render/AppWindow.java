@@ -1,14 +1,12 @@
 package render;
 
-import exceptions.ObjectAlreadyCreatedException;
-
 import javax.swing.*;
 
 public class AppWindow extends JFrame {
     private static int WIDTH = 300;
     private static int HEIGHT = 650;
 
-    private static AppWindow self;
+    private static AppWindow instance;
     private Canvas canvas;
     private GameData gameData;
 
@@ -25,11 +23,11 @@ public class AppWindow extends JFrame {
         setVisible(true);
     }
 
-    public static AppWindow createAndGet() throws ObjectAlreadyCreatedException {
-        if (self != null) {
-            throw new ObjectAlreadyCreatedException();
+    public static AppWindow getInstance() {
+        if (instance != null) {
+            return instance;
         }
-        self = new AppWindow(GameData.getInstance());
-        return self;
+        instance = new AppWindow(GameData.getInstance());
+        return instance;
     }
 }
