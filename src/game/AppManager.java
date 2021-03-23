@@ -1,5 +1,6 @@
 package game;
 
+import game.piece.Shape;
 import input.KeyType;
 import render.AppWindow;
 import render.GameData;
@@ -74,6 +75,7 @@ public class AppManager implements Runnable {
 
     @Override
     public void run() {
+        enableActivePiece();
         while (appIsRunning) {
             update();
             redraw();
@@ -91,20 +93,39 @@ public class AppManager implements Runnable {
 
     private void update() {
         final int[] lanes = gameData.getGrid().identifyFilledLanes(0, 19);
-        final boolean removeLanes = lanes.length > 0;
+        final boolean filledLanesArePresent = lanes.length > 0;
 
-        if (removeLanes) {
+        if (filledLanesArePresent) {
+            System.out.println("deleting");
             gameData.getGrid().clearMultipleLanes(lanes);
-        } else {
+            resetAndEnableActivePiece();
+        } else if (!gameData.getActivePiece().isDisabled()) {
+            System.out.println("moving");
             final boolean pieceIsMovable = movePieceDown();
             if (!pieceIsMovable) {
+                System.out.println("wasnt moving");
                 movePieceDataToGridData();
-                resetActivePiece();
+                disableActivePiece();
             }
+        } else {
+            resetAndEnableActivePiece();
         }
     }
 
+    private void resetAndEnableActivePiece() {
+        resetActivePiece();
+        enableActivePiece();
+    }
+
+    private void disableActivePiece() {
+        gameData.getActivePiece().setDisabled(true);
+    }
+
+    private void enableActivePiece() {
+        gameData.getActivePiece().setDisabled(false);
+    }
+
     private void resetActivePiece() {
-        this.gameData.getActivePiece().reset(true);
+        this.gameData.getActivePiece().reinitialize(Shape.randomShape());
     }
 }

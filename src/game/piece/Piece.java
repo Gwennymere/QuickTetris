@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Piece {
-    public int yOffset = 0;
-    public int xOffset = 0;
+    private static final int DEFAULT_Y = 0;
+    private static final int DEFAULT_X = 3;
+    public int yOffset = DEFAULT_Y;
+    public int xOffset = DEFAULT_X;
     private BoundingBox boundingBox;
     private Shape shape;
     private Color color;
@@ -78,9 +80,22 @@ public class Piece {
         return false;
     }
 
-    public void reset(boolean disable) {
-        if (disable) {
-            this.disabled = true;
-        }
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean isDisabled) {
+        this.disabled = isDisabled;
+        System.out.println("isDisabled: " + isDisabled);
+    }
+
+    public void reinitialize(Shape newShape) {
+        this.setShape(newShape);
+        this.yOffset = DEFAULT_Y;
+        this.xOffset = DEFAULT_X;
+    }
+
+    public void reinitialize() {
+        this.reinitialize(shape);
     }
 }

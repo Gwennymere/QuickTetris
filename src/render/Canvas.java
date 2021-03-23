@@ -31,7 +31,7 @@ public class Canvas extends JPanel {
         this.drawGameBoardGrid(g);
         this.drawActivePiece(g);
 //        printGridDebug();
-        System.out.println("repainted");
+//        System.out.println("repainted");
     }
 
     private void drawGameBoardGrid(Graphics g) {
@@ -40,6 +40,9 @@ public class Canvas extends JPanel {
 
     private void drawActivePiece(Graphics g) {
         final Piece activePiece = gameData.getActivePiece();
+        if(activePiece.isDisabled()) {
+            return;
+        }
         drawAspect(activePiece.getColoredAspect(), gameBoardPosX + activePiece.xOffset,
                 gameBoardPosY + activePiece.yOffset, false, g);
     }
