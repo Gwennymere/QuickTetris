@@ -1,5 +1,10 @@
 package game.piece;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public enum Shape {
     L(new int[][][]
             {{
@@ -132,5 +137,14 @@ public enum Shape {
 
     public int getDepth() {
         return layout.length;
+    }
+
+    private static final List<Shape> VALUES =
+            Collections.unmodifiableList(Arrays.asList(values()));
+    private static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
+
+    public static Shape randomShape() {
+        return VALUES.get(RANDOM.nextInt(SIZE));
     }
 }
