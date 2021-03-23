@@ -1,6 +1,6 @@
 package input;
 
-import render.GameData;
+import game.data.GameData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +17,7 @@ public enum KeyType {
 
     private static final GameData gameData = GameData.getInstance();
 
-    private static final Map<Integer, KeyType> ingameKeyCodeMap = new HashMap<>(){{
+    private static final Map<Integer, KeyType> ingameKeyCodeMap = new HashMap<>() {{
         put(69, TURN_CLOCKWISE);
         put(81, TURN_COUNTER_CLOCKWISE);
         put(68, MOVE_RIGHT);
@@ -32,11 +32,7 @@ public enum KeyType {
 
     public static KeyType get(int keyCode) {
         System.out.print(keyCode);
-        switch (KeyType.gameData.getView()) {
-            case INGAME:
-                final KeyType keyType = ingameKeyCodeMap.get(keyCode);
-                return keyType != null ? keyType : NONE;
-        }
-        return NONE;
+        final KeyType keyType = ingameKeyCodeMap.get(keyCode);
+        return keyType != null ? keyType : NONE;
     }
 }

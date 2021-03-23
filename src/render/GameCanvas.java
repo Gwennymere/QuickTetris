@@ -1,5 +1,6 @@
 package render;
 
+import game.data.GameData;
 import game.piece.Piece;
 
 import javax.swing.*;

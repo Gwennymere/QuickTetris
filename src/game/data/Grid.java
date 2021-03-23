@@ -1,4 +1,4 @@
-package render;
+package game.data;
 
 import java.util.Arrays;
 

@@ -1,10 +1,10 @@
 package game;
 
 import app.AppManager;
+import game.data.GameData;
 import game.piece.Piece;
 import game.piece.Shape;
 import input.KeyType;
-import render.GameData;
 
 public class GameManager implements Runnable {
     private static final GameManager instance = new GameManager();
