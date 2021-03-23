@@ -1,5 +1,6 @@
 package game;
 
+import game.piece.Piece;
 import game.piece.Shape;
 import input.KeyType;
 import render.AppWindow;
@@ -126,6 +127,11 @@ public class AppManager implements Runnable {
     }
 
     private void resetActivePiece() {
-        this.gameData.getActivePiece().reinitialize(Shape.randomShape());
+        final Piece activePiece = this.gameData.getActivePiece();
+        activePiece.reinitialize(Shape.randomShape());
+        final boolean boundingStateValid = activePiece.isBoundingStateValid(gameData.getGridAspectOverlappingWithActivePiece());
+        if (!boundingStateValid) {
+            appIsRunning = false;
+        }
     }
 }

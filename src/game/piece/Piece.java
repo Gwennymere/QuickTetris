@@ -95,6 +95,10 @@ public class Piece {
         this.xOffset = DEFAULT_X;
     }
 
+    public boolean isBoundingStateValid(int[][] gridAspect) {
+        return boundingBox.isBoundingStateValid(gridAspect);
+    }
+
     public void reinitialize() {
         this.reinitialize(shape);
     }
