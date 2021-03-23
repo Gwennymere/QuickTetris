@@ -8,17 +8,17 @@ import render.GameData;
 
 public class AppManager implements Runnable {
     private static final AppManager instance = new AppManager();
+    private static Thread thread;
 
     private final GameData gameData;
     private final AppWindow appWindow;
     private int GAME_SPEED = 400;
 
-    private boolean appIsRunning = true;
+    private boolean gameIsRunning = false;
 
     private AppManager() {
         this.appWindow = AppWindow.getInstance();
         this.gameData = GameData.getInstance();
-        redraw();
     }
 
     private void redraw() {
@@ -46,14 +46,14 @@ public class AppManager implements Runnable {
                 movePieceDataToGridData();
                 break;
             case ESCAPE:
-                setAppRunning(!appIsRunning);
+                setAppRunning(!gameIsRunning);
                 break;
         }
         redraw();
     }
 
     private synchronized void setAppRunning(boolean running) {
-        this.appIsRunning = running;
+        this.gameIsRunning = running;
     }
 
     public synchronized boolean movePieceDown() {
@@ -78,12 +78,14 @@ public class AppManager implements Runnable {
 
     @Override
     public void run() {
+        resetActivePiece();
         enableActivePiece();
-        while (appIsRunning) {
+        while (gameIsRunning) {
             update();
             redraw();
             threadWait();
         }
+        appWindow.addRestartButton();
     }
 
     private void threadWait() {
@@ -133,11 +135,19 @@ public class AppManager implements Runnable {
         activePiece.reinitialize(Shape.randomShape());
         final boolean boundingStateValid = activePiece.isBoundingStateValid(gameData.getGridAspectOverlappingWithActivePiece());
         if (!boundingStateValid) {
-            appIsRunning = false;
+            gameIsRunning = false;
         }
     }
 
     public static AppManager getInstance() {
         return instance;
+    }
+
+    public void runNewGame() {
+        this.gameIsRunning = true;
+        this.gameData.getGrid().clear();
+        this.appWindow.requestFocus();
+        this.thread = new Thread(this);
+        this.thread.start();
     }
 }

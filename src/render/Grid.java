@@ -76,20 +76,30 @@ public class Grid {
         return true;
     }
 
-    public void clearLane(int lane) {
+    public void clearAndDropLanes(int lane) {
         for (int y = lane; y > 0; y--) {
             for (int x = 0; x < getWidth(); x++) {
                 data[x][y] = data[x][y - 1];
             }
         }
+        clearLane(0);
+    }
+
+    private void clearLane(int lane) {
         for (int x = 0; x < getWidth(); x++) {
-            data[x][0] = new int[]{0, 0, 0};
+            data[x][lane] = new int[]{0, 0, 0};
         }
     }
 
     public void clearMultipleLanes(int[] lane) {
         for (int i = 0; i < lane.length; i++) {
-            clearLane(lane[i]);
+            clearAndDropLanes(lane[i]);
+        }
+    }
+
+    public void clear() {
+        for (int y = 0; y < getHeight(); y++) {
+            clearLane(y);
         }
     }
 }

@@ -1,12 +1,15 @@
 package render;
 
+import game.AppManager;
+
 import javax.swing.*;
+import java.awt.*;
 
 public class AppWindow extends JFrame {
     private static int WIDTH = 300;
     private static int HEIGHT = 650;
 
-    private static AppWindow instance;
+    private static AppWindow instance = new AppWindow(GameData.getInstance());
     private Canvas canvas;
     private GameData gameData;
 
@@ -24,10 +27,16 @@ public class AppWindow extends JFrame {
     }
 
     public static AppWindow getInstance() {
-        if (instance != null) {
-            return instance;
-        }
-        instance = new AppWindow(GameData.getInstance());
         return instance;
+    }
+
+    public void addRestartButton() {
+        final Button restart = new Button("Restart");
+        canvas.add(restart);
+        restart.addActionListener(e -> {
+            AppManager.getInstance().runNewGame();
+            canvas.remove(restart);
+        });
+        setVisible(true);
     }
 }
