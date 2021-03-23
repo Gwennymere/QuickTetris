@@ -6,8 +6,8 @@ import input.KeyType;
 import render.AppWindow;
 import render.GameData;
 
-public class AppManager implements Runnable {
-    private static final AppManager instance = new AppManager();
+public class GameManager implements Runnable {
+    private static final GameManager instance = new GameManager();
     private static Thread thread;
 
     private final GameData gameData;
@@ -16,7 +16,7 @@ public class AppManager implements Runnable {
 
     private boolean gameIsRunning = false;
 
-    private AppManager() {
+    private GameManager() {
         this.appWindow = AppWindow.getInstance();
         this.gameData = GameData.getInstance();
     }
@@ -49,6 +49,7 @@ public class AppManager implements Runnable {
                 setAppRunning(!gameIsRunning);
                 break;
         }
+        // TODO draw
         redraw();
     }
 
@@ -139,7 +140,7 @@ public class AppManager implements Runnable {
         }
     }
 
-    public static AppManager getInstance() {
+    public static GameManager getInstance() {
         return instance;
     }
 

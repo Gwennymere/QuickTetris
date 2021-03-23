@@ -1,6 +1,6 @@
 package input;
 
-import game.AppManager;
+import app.AppManager;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -10,17 +10,12 @@ public class KeyInputManager implements KeyListener {
     private AppManager appManager;
 
     private KeyInputManager() {
-        setGameManager(AppManager.getInstance());
+        appManager = (AppManager.getInstance());
     }
 
     public static KeyInputManager getInstance() {
         return instance;
     }
-
-    private void setGameManager(AppManager appManager) {
-        this.appManager = appManager;
-    }
-
 
     @Override
     public void keyTyped(KeyEvent e) {}

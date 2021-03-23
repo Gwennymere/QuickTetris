@@ -1,6 +1,6 @@
 package render;
 
-import game.AppManager;
+import game.GameManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +34,7 @@ public class AppWindow extends JFrame {
         final Button restart = new Button("Restart");
         canvas.add(restart);
         restart.addActionListener(e -> {
-            AppManager.getInstance().runNewGame();
+            GameManager.getInstance().runNewGame();
             canvas.remove(restart);
         });
         setVisible(true);
