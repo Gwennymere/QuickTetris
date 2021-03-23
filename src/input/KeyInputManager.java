@@ -11,6 +11,7 @@ public class KeyInputManager implements KeyListener {
 
     private KeyInputManager() {
         appManager = (AppManager.getInstance());
+        System.out.println(this.getClass() + " created!");
     }
 
     public static KeyInputManager getInstance() {

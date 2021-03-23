@@ -1,9 +1,9 @@
 package game;
 
+import app.AppManager;
 import game.piece.Piece;
 import game.piece.Shape;
 import input.KeyType;
-import render.AppWindow;
 import render.GameData;
 
 public class GameManager implements Runnable {
@@ -11,18 +11,14 @@ public class GameManager implements Runnable {
     private static Thread thread;
 
     private final GameData gameData;
-    private final AppWindow appWindow;
+    private AppManager appManager;
     private int GAME_SPEED = 400;
 
     private boolean gameIsRunning = false;
 
     private GameManager() {
-        this.appWindow = AppWindow.getInstance();
         this.gameData = GameData.getInstance();
-    }
-
-    private void redraw() {
-        appWindow.repaint();
+        System.out.println(this.getClass() + " created!");
     }
 
     public void keyAction(KeyType keyType) {
@@ -49,8 +45,6 @@ public class GameManager implements Runnable {
                 setAppRunning(!gameIsRunning);
                 break;
         }
-        // TODO draw
-        redraw();
     }
 
     private synchronized void setAppRunning(boolean running) {
@@ -79,14 +73,17 @@ public class GameManager implements Runnable {
 
     @Override
     public void run() {
+        if (appManager == null) {
+            appManager = AppManager.getInstance();
+        }
         resetActivePiece();
         enableActivePiece();
         while (gameIsRunning) {
             update();
-            redraw();
+            appManager.requestRedraw();
             threadWait();
         }
-        appWindow.addRestartButton();
+        appManager.gameConcluded();
     }
 
     private void threadWait() {
@@ -102,14 +99,14 @@ public class GameManager implements Runnable {
         final boolean filledLanesArePresent = lanes.length > 0;
 
         if (filledLanesArePresent) {
-            System.out.println("deleting");
+//            System.out.println("deleting");
             gameData.getGrid().clearMultipleLanes(lanes);
             resetAndEnableActivePiece();
         } else if (!gameData.getActivePiece().isDisabled()) {
-            System.out.println("moving");
+//            System.out.println("moving");
             final boolean pieceIsMovable = movePieceDown();
             if (!pieceIsMovable) {
-                System.out.println("wasnt moving");
+//                System.out.println("wasnt moving");
                 movePieceDataToGridData();
                 disableActivePiece();
             }
@@ -147,7 +144,6 @@ public class GameManager implements Runnable {
     public void runNewGame() {
         this.gameIsRunning = true;
         this.gameData.getGrid().clear();
-        this.appWindow.requestFocus();
         this.thread = new Thread(this);
         this.thread.start();
     }

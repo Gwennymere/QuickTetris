@@ -1,6 +1,6 @@
 package render;
 
-import game.GameManager;
+import app.AppManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +24,8 @@ public class AppWindow extends JFrame {
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
         setVisible(true);
+
+        System.out.println(this.getClass() + " created!");
     }
 
     public static AppWindow getInstance() {
@@ -34,7 +36,7 @@ public class AppWindow extends JFrame {
         final Button restart = new Button("Restart");
         canvas.add(restart);
         restart.addActionListener(e -> {
-            GameManager.getInstance().runNewGame();
+            AppManager.getInstance().startNewGame();
             canvas.remove(restart);
         });
         setVisible(true);
