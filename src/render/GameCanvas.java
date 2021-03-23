@@ -6,7 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameCanvas extends JPanel {
-    private static final int CELL_WIDTH = 10;
+    private static final int BOARD_OFFSET_X = 10;
+    private static final int BOARD_OFFSET_Y = 10;
+    private static final int BOARD_WIDTH = 300;
+    private static final int CELL_WIDTH = (BOARD_WIDTH - BOARD_OFFSET_X * 4) / GameData.GRID_WIDTH;
     private static final int CELL_HEIGHT = CELL_WIDTH;
     private static final int BORDER_WIDTH = 1;
     private static final int BORDER_HEIGHT = BORDER_WIDTH;
@@ -14,14 +17,10 @@ public class GameCanvas extends JPanel {
     private static final int CUBE_HEIGHT = CELL_HEIGHT - 2 * BORDER_HEIGHT;
     private static final Color BORDER_COLOR = Color.GRAY;
     private GameData gameData;
-    private final int gameBoardPosX;
-    private final int gameBoardPosY;
 
-    public GameCanvas(GameData gameData, int gameBoardPosX, int gameBoardPosY) {
+    public GameCanvas() {
         super(true);
-        this.gameData = gameData;
-        this.gameBoardPosX = gameBoardPosX % CELL_WIDTH;
-        this.gameBoardPosY = gameBoardPosY % CELL_HEIGHT;
+        this.gameData = GameData.getInstance();
         System.out.println(this.getClass() + " created!");
     }
 
@@ -33,7 +32,7 @@ public class GameCanvas extends JPanel {
     }
 
     private void drawGameBoardGrid(Graphics g) {
-        this.drawAspect(gameData.getGrid().getData(), gameBoardPosX, gameBoardPosY, true, g);
+        this.drawAspect(gameData.getGrid().getData(),0, 0, true, g);
     }
 
     private void drawActivePiece(Graphics g) {
@@ -41,8 +40,7 @@ public class GameCanvas extends JPanel {
         if(activePiece.isDisabled()) {
             return;
         }
-        drawAspect(activePiece.getColoredAspect(), gameBoardPosX + activePiece.xOffset,
-                gameBoardPosY + activePiece.yOffset, false, g);
+        drawAspect(activePiece.getColoredAspect(), activePiece.xOffset, activePiece.yOffset, false, g);
     }
 
     private void drawAspect(int[][][] aspectData, int xPos, int yPos, boolean drawBlack, Graphics graphics) {
@@ -68,8 +66,8 @@ public class GameCanvas extends JPanel {
 
     private void drawCell(int xPos, int yPos, Color color, Graphics g) {
         g.setColor(BORDER_COLOR);
-        g.fillRect(xPos * CELL_WIDTH, yPos * CELL_HEIGHT, CELL_WIDTH, CELL_HEIGHT);
+        g.fillRect(xPos * CELL_WIDTH + BOARD_OFFSET_X, yPos * CELL_HEIGHT + BOARD_OFFSET_Y, CELL_WIDTH, CELL_HEIGHT);
         g.setColor(color);
-        g.fillRect(xPos * CELL_WIDTH + BORDER_WIDTH, yPos * CELL_HEIGHT + BORDER_HEIGHT, CUBE_WIDTH + BORDER_WIDTH, CUBE_HEIGHT + BORDER_HEIGHT);
+        g.fillRect(xPos * CELL_WIDTH + BORDER_WIDTH + BOARD_OFFSET_X, yPos * CELL_HEIGHT + BORDER_HEIGHT + BOARD_OFFSET_Y, CUBE_WIDTH + BORDER_WIDTH, CUBE_HEIGHT + BORDER_HEIGHT);
     }
 }

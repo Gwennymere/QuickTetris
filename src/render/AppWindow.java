@@ -6,17 +6,17 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class AppWindow extends JFrame {
-    private static int WIDTH = 300;
-    private static int HEIGHT = 650;
+    public static int WIDTH = 500;
+    public static int HEIGHT = 650;
 
-    private static AppWindow instance = new AppWindow(GameData.getInstance());
+    private static AppWindow instance = new AppWindow();
     private GameCanvas gameCanvas;
     private final Collection<Component> componentList = new ArrayList<>();
     private final JPanel mainMenu = new MainMenu();
 
-    private AppWindow(GameData gameData) {
+    private AppWindow() {
         super("QuickTetris");
-        this.gameCanvas = new GameCanvas(gameData, 50, 50);
+        this.gameCanvas = new GameCanvas();
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
