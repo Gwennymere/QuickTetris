@@ -99,14 +99,12 @@ public class GameManager implements Runnable {
         final boolean filledLanesArePresent = lanes.length > 0;
 
         if (filledLanesArePresent) {
-//            System.out.println("deleting");
+            gameData.addToScore((lanes.length + lanes.length) / 2 * GAME_SPEED);
             gameData.getGrid().clearMultipleLanes(lanes);
             resetAndEnableActivePiece();
         } else if (!gameData.getActivePiece().isDisabled()) {
-//            System.out.println("moving");
             final boolean pieceIsMovable = movePieceDown();
             if (!pieceIsMovable) {
-//                System.out.println("wasnt moving");
                 movePieceDataToGridData();
                 disableActivePiece();
             }

@@ -41,14 +41,23 @@ public class AppWindow extends JFrame {
 
     public void setupGameScreen() {
         removeAllComponentsFromWindow();
-        addComponent(this.gameCanvas);
+
+        addComponent(gameCanvas);
         repaint();
         setVisible(true);
     }
 
     private void addComponent(Component comp) {
+        this.addComponent(comp, null);
+    }
+
+    private void addComponent(Component comp, GridBagConstraints c) {
         componentList.add(comp);
-        add(comp);
+        if (c != null) {
+            add(comp, c);
+        } else {
+            add(comp);
+        }
     }
 
     private void removeAllComponentsFromWindow() {

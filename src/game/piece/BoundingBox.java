@@ -35,21 +35,13 @@ public class BoundingBox {
 
     public boolean isRotatedBoundingStateValid(int[][] surroundingAspect, int rotation) {
         final int[][] ownAspect = this.getRotatedAspect(rotation);
-        //        System.out.println("------------------");
         for (int i = 0; i < surroundingAspect.length; i++) {
             for (int j = 0; j < surroundingAspect[0].length; j++) {
                 if (ownAspect[i][j] == 1 && surroundingAspect[i][j] == 1) {
-                    //                    System.out.print("X");
                     return false;
-                } else if (ownAspect[i][j] == 1) {
-                    //                    System.out.print("r");
-                } else if (surroundingAspect[i][j] == 0) {
-                    //                    System.out.print("0");
                 }
             }
-//            System.out.println();
         }
-//        System.out.println("------------------");
         return true;
     }
 

@@ -86,7 +86,6 @@ public class Piece {
 
     public void setDisabled(boolean isDisabled) {
         this.disabled = isDisabled;
-        System.out.println("isDisabled: " + isDisabled);
     }
 
     public void reinitialize(Shape newShape) {

@@ -31,7 +31,6 @@ public enum KeyType {
     }};
 
     public static KeyType get(int keyCode) {
-        System.out.print(keyCode);
         final KeyType keyType = ingameKeyCodeMap.get(keyCode);
         return keyType != null ? keyType : NONE;
     }

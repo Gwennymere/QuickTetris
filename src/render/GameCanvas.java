@@ -22,6 +22,17 @@ public class GameCanvas extends JPanel {
     public GameCanvas() {
         super(true);
         this.gameData = GameData.getInstance();
+
+        final GridBagConstraints constraints = new GridBagConstraints();
+        constraints.weightx = 0.1;
+        constraints.weighty = 0.1;
+        constraints.gridx = 0;
+        constraints.gridy = 1;
+        constraints.anchor = GridBagConstraints.BASELINE;
+        constraints.fill = GridBagConstraints.BOTH;
+        setLayout(new GridBagLayout());
+        add(new GameSidePanel(), constraints);
+
         System.out.println(this.getClass() + " created!");
     }
 
